@@ -3,3 +3,6 @@ gradio
 requests
 python-dotenv
 anthropic
+duckdb
+chromadb
+sentence-transformers
