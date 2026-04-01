@@ -1,0 +1,5 @@
+streamlit
+gradio
+requests
+python-dotenv
+anthropic
