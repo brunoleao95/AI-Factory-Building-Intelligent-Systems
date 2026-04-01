@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \":*)",
+      "Bash(pip list:*)",
+      "Bash(pip show:*)",
+      "Bash(npm --version)",
+      "Bash(ollama --version)",
+      "Bash(mkdir -p \"C:/Users/brunn/OneDrive/Área de Trabalho/Facul/Segundo Ano/AI Factory Building Intelligent Systems/aula1\")",
+      "Bash(mkdir -p \"C:/Users/brunn/OneDrive/Área de Trabalho/Facul/Segundo Ano/AI Factory Building Intelligent Systems/aula2\")",
+      "Bash(python -m venv .venv)",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(npm install:*)",
+      "Bash(flowise --version)",
+      "Bash(npx flowise:*)",
+      "Bash(where ollama:*)",
+      "Bash(curl -s http://localhost:11434/api/tags)",
+      "Bash(powershell -Command \"Get-Process | Where-Object {$_Name -like ''*ollama*''}\")",
+      "Bash(powershell -Command \"Get-Process ollama -ErrorAction SilentlyContinue | Select-Object Name, Id, CPU\")",
+      "Read(//c/Users/brunn/AppData/Local/Programs/**)",
+      "Read(//c/Program Files/**)",
+      "Bash(python -c \"import urllib.request; r = urllib.request.urlopen\\(''http://localhost:11434''\\); print\\(r.read\\(\\).decode\\(\\)\\)\")",
+      "Bash(.venv/Scripts/python -c \"import streamlit, gradio, anthropic, dotenv, requests; print\\(''streamlit:'', streamlit.__version__\\); print\\(''gradio:'', gradio.__version__\\); print\\(''anthropic:'', anthropic.__version__\\); print\\(''dotenv: OK''\\); print\\(''requests: OK''\\)\")",
+      "Bash(.venv/Scripts/python -c \":*)"
+    ]
+  }
+}
