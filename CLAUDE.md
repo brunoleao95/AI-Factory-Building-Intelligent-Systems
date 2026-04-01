@@ -21,15 +21,13 @@ Disciplina de faculdade (2o ano, PUCPR) focada na construcao de sistemas de IA d
 
 ```
 AI Factory Building Intelligent Systems/
-├── aula1/          <- Aula 1: Arquitetura + fluxos no Flowise
-├── aula2/          <- Aula 2: Interfaces com Streamlit e Gradio
-├── aula3/          <- Aula 3: DuckDB + Data Warehouse + Text-to-SQL
-├── aula4/          <- Aula 4: Embeddings + busca semantica + ChromaDB
 ├── .env            <- Variaveis de ambiente (nao commitar)
 ├── .gitignore
 ├── requirements.txt
 └── CLAUDE.md
 ```
+
+> Estrutura sera expandida quando o arquivo do projeto for enviado.
 
 ## Convencoes
 
