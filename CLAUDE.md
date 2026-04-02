@@ -1,76 +1,120 @@
-# AI Factory - Building Intelligent Systems (PUCPR)
+# AI Factory - Assistente de Gestao para Psicologa Clinica
 
-## Sobre a materia
+## Sobre o Projeto
 
-Disciplina de faculdade (2o ano, PUCPR) focada na construcao de sistemas de IA do zero ate a interface.
+Disciplina **AI Factory - Building Intelligent Systems** (PUCPR, 2o ano).
+Projeto final: assistente inteligente para psicologas autonomas que centraliza gestao financeira e fornece repositorio tecnico via RAG.
 
-## Stack de tecnologias
+**CBL:**
+- Grande ideia: Gestao inteligente e produtividade tecnologica na psicologia clinica
+- Desafio: Assistente que centraliza gestao financeira + repositorio tecnico via RAG
 
-| Ferramenta | Proposito | URL local |
-|------------|-----------|-----------|
-| **Flowise** | Builder visual de fluxos de IA (no-code/low-code) | http://localhost:3000 |
-| **Ollama** | LLM local (sem API key necessaria) | http://localhost:11434 |
-| **Streamlit** | Interfaces web em Python (dashboards, apps) | http://localhost:8501 |
-| **Gradio** | Interfaces rapidas para demos de ML/chatbots | http://localhost:7860 |
-| **DuckDB** | Banco OLAP in-process (mini data warehouse) | -- |
-| **ChromaDB** | Banco de dados vetorial (embeddings) | -- |
-| **sentence-transformers** | Modelos de embedding locais (all-MiniLM) | -- |
-| **Python 3.13** | Linguagem principal | -- |
+## Stack
 
-## Estrutura do projeto
+| Ferramenta | Proposito | Onde |
+|------------|-----------|------|
+| **Ollama** (llama3.2) | LLM local, chat, Text-to-SQL, RAG | localhost:11434 |
+| **Streamlit** | Interface web do assistente | localhost:8501 |
+| **DuckDB** | Banco OLAP in-memory (dados financeiros) | In-process |
+| **ChromaDB** | Banco vetorial (embeddings para RAG) | Persistido em chroma_data/ |
+| **sentence-transformers** | Embeddings locais (all-MiniLM-L6-v2) | In-process |
+| **scikit-learn** | Modelo ML de risco de inadimplencia | In-process |
+| **Python 3.13** | Linguagem principal | .venv/ |
+
+## Estrutura do Projeto
 
 ```
 AI Factory Building Intelligent Systems/
-├── .env            <- Variaveis de ambiente (nao commitar)
+├── app.py                  <- Streamlit: interface principal (chat + streaming)
+├── config.py               <- Configuracoes, constantes, system prompt, mensagens UX
+├── data/
+│   ├── pacientes.csv       <- 30 pacientes ficticios (id, codigo, valor, modelo cobranca)
+│   └── financeiro.csv      <- ~414 registros (sessoes, pagamentos, NFs)
+├── docs/                   <- Documentos para RAG (usuario fornece .txt/.pdf)
+│   └── README.md
+├── src/
+│   ├── __init__.py
+│   ├── database.py         <- DuckDB: load_tables(), execute_query(), get_schema_description()
+│   ├── rag.py              <- ChromaDB: index_documents(), search(), chunking
+│   ├── llm.py              <- Ollama: chat_stream(), text_to_sql(), rag_answer()
+│   ├── ml_model.py         <- scikit-learn: train_model(), predict_risk(), RandomForest
+│   └── agents.py           <- Roteador + agentes (financeiro, repositorio, risco, cobranca)
+├── scripts/
+│   └── generate_data.py    <- Gera CSVs ficticios (seed=42, reproduzivel)
+├── chroma_data/            <- ChromaDB persistido (no .gitignore)
+├── .env                    <- Variaveis de ambiente (nao commitar)
+├── .env.example            <- Template do .env
 ├── .gitignore
 ├── requirements.txt
+├── README.md
 └── CLAUDE.md
 ```
 
-> Estrutura sera expandida quando o arquivo do projeto for enviado.
+## Arquitetura dos Componentes
+
+### Fluxo Principal
+1. Usuario digita pergunta no chat (Streamlit)
+2. `agents.route_question()` detecta intencao por keywords
+3. Despacha para agente adequado:
+   - **financeiro** → Text-to-SQL → DuckDB → LLM formata resposta
+   - **rag** → ChromaDB busca semantica → LLM responde com contexto
+   - **risco** → scikit-learn predict_risk() → formata analise
+   - **cobranca** → DuckDB busca pendencias → LLM gera mensagem WhatsApp
+   - **geral** → LLM responde direto
+4. Resposta aparece com streaming (token por token)
+
+### Dados Estruturados (DuckDB)
+- **pacientes**: id_paciente, nome_codigo (PAC-ALPHA etc), valor_sessao, modelo_cobranca
+- **financeiro**: id_registro, id_paciente, data_sessao, valor, status_pagamento, nf_emitida
+- Relacionamento: financeiro.id_paciente → pacientes.id_paciente
+- Seguranca: queries destrutivas bloqueadas (DROP, DELETE, UPDATE, INSERT)
+
+### Pipeline RAG (ChromaDB)
+- Indexacao: ler docs/ → chunking (500 chars, 50 overlap) → embeddings → ChromaDB
+- Busca: query → embedding → cosine similarity → top 5 chunks
+- Suporta .txt e .pdf (via pypdf)
+
+### Modelo ML (scikit-learn)
+- RandomForestClassifier para risco de inadimplencia
+- Features: taxa_atraso, taxa_nf, total_sessoes, valor_sessao, modelo_cobranca
+- Label: risco alto se taxa_atraso > 20%
+- Treinado automaticamente ao carregar dados
+
+### Interface (Streamlit)
+- Chat com st.chat_message + st.write_stream (streaming real)
+- Session state para historico
+- Sidebar com status do sistema + resumo financeiro
+- Feedback visual por tipo de agente ("Consultando dados financeiros...")
 
 ## Convencoes
 
-- **venv**: Ativar sempre antes de rodar Python: `.venv/Scripts/activate`
-- **Flowise**: Iniciar com `npx flowise start` antes de acessar o browser
-- **Ollama**: Deve estar rodando antes de conectar o Flowise
-- **Variaveis de ambiente**: Usar `python-dotenv` e carregar do `.env`
-- **Git**: Repositorio inicializado, commitar progresso por aula
+- **venv**: `.venv/Scripts/activate` (Windows)
+- **Ollama**: Deve estar rodando antes de iniciar o app
+- **Variaveis**: python-dotenv carrega do .env
+- Codigo limpo, sem over-engineering
+- Nomes de pacientes sempre codificados (etica)
+- Valores formatados em R$
 
-## Aulas
+## Como Rodar
 
-- **Aula 1**: Design de arquitetura de sistemas de IA + primeiro fluxo no Flowise
-- **Aula 2**: Interfaces web -- UX writing, latencia percebida, Streamlit vs Gradio
-- **Aula 3**: Memoria e contexto -- OLTP vs OLAP, DuckDB, Pandas, mini Data Warehouse, ETL, Text-to-SQL
-- **Aula 4**: Embeddings, busca semantica, similaridade de cosseno, ChromaDB, preparacao para RAG
-- **Aula 5** (proxima): RAG (Retrieval-Augmented Generation) -- combinar busca semantica com LLM
+```bash
+# 1. Ativar venv
+.venv/Scripts/activate
 
-## Conceitos-chave por aula
+# 2. Iniciar Ollama (outro terminal)
+ollama serve
 
-### Aula 3 - Dados estruturados
-- **OLTP** (PostgreSQL, MySQL): transacoes rapidas do dia a dia
-- **OLAP** (DuckDB, BigQuery): analises sobre grandes volumes
-- **DuckDB**: banco OLAP in-process, le CSV/Parquet/JSON direto, integra com Pandas
-- **Text-to-SQL**: usuario pergunta em linguagem natural -> LLM traduz para SQL -> executa no DuckDB -> resposta formatada
-- Padrao recomendado: DuckDB para carregar e agregar, Pandas para refinar e visualizar
+# 3. Gerar dados (se necessario)
+python scripts/generate_data.py
 
-### Aula 4 - Dados nao-estruturados
-- **Embeddings**: representacao vetorial de texto (centenas/milhares de dimensoes)
-- **Similaridade de cosseno**: mede distancia semantica entre vetores (1.0 = identico, 0.0 = nao relacionado)
-- **ChromaDB**: banco vetorial para armazenar e buscar embeddings
-- **Pipeline de indexacao**: carregar docs -> dividir em chunks -> gerar embeddings -> armazenar no ChromaDB
-- **Pipeline de busca**: pergunta -> embedding -> busca por similaridade -> retorna top K documentos
-- Proximo passo: combinar com LLM para criar RAG (aula 5)
+# 4. Rodar app
+streamlit run app.py
+```
 
-## Contexto do professor
+## Dados Gerados
 
-- O professor usa **LM Studio** como alternativa ao Ollama
-- Preferencia do aluno: **Ollama** (ja tem experiencia)
-- Sem API keys de cloud por enquanto -- tudo local
-
-## Notas de desenvolvimento
-
-- Sempre preferir codigo limpo e simples (sem over-engineering)
-- Aplicar conceitos de **UX writing**: mensagens amigaveis, feedback visual, streaming de respostas
-- Implementar **streaming** nas respostas da IA para reduzir latencia percebida
-- Decisoes de arquitetura (OLTP vs OLAP, qual banco usar) sao importantes -- vibecoding nao resolve isso
+- 30 pacientes com codigos gregos (PAC-ALPHA ate PAC-IRIS)
+- 414 registros financeiros (jul-dez 2024)
+- ~88% pagos, ~12% pendentes
+- 6 pacientes classificados como risco alto
+- Total pago: R$ 89.230, Total pendente: R$ 13.250

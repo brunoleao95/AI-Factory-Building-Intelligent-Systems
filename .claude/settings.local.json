@@ -21,7 +21,10 @@
       "Read(//c/Program Files/**)",
       "Bash(python -c \"import urllib.request; r = urllib.request.urlopen\\(''http://localhost:11434''\\); print\\(r.read\\(\\).decode\\(\\)\\)\")",
       "Bash(.venv/Scripts/python -c \"import streamlit, gradio, anthropic, dotenv, requests; print\\(''streamlit:'', streamlit.__version__\\); print\\(''gradio:'', gradio.__version__\\); print\\(''anthropic:'', anthropic.__version__\\); print\\(''dotenv: OK''\\); print\\(''requests: OK''\\)\")",
-      "Bash(.venv/Scripts/python -c \":*)"
+      "Bash(.venv/Scripts/python -c \":*)",
+      "Bash(.venv/Scripts/python:*)",
+      "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python << 'PYEOF':*)",
+      "Bash(curl -s -X POST http://localhost:11434/api/chat -d '{\"\"\"\"model\"\"\"\":\"\"\"\"llama3.2:1b\"\"\"\",\"\"\"\"messages\"\"\"\":[{\"\"\"\"role\"\"\"\":\"\"\"\"user\"\"\"\",\"\"\"\"content\"\"\"\":\"\"\"\"say hi\"\"\"\"}],\"\"\"\"stream\"\"\"\":false}')"
     ]
   }
 }

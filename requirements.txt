@@ -6,3 +6,7 @@ anthropic
 duckdb
 chromadb
 sentence-transformers
+scikit-learn
+pypdf
+pandas
+numpy
