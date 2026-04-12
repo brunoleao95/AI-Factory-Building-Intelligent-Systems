@@ -1,0 +1,126 @@
+MANUAL DIAGNOSTICO E ESTATISTICO DE TRANSTORNOS MENTAIS (DSM-5)
+Resumo dos principais transtornos para consulta clinica
+Referencia: American Psychiatric Association (APA), 5a edicao, 2013
+
+=== TRANSTORNO DEPRESSIVO MAIOR (F32/F33) ===
+
+Criterios diagnosticos: Pelo menos 5 dos seguintes sintomas presentes durante 2 semanas, representando mudanca em relacao ao funcionamento anterior. Pelo menos um dos sintomas deve ser (1) humor deprimido ou (2) perda de interesse/prazer.
+
+1. Humor deprimido na maior parte do dia, quase todos os dias
+2. Diminuicao acentuada do interesse ou prazer em todas ou quase todas as atividades
+3. Perda ou ganho significativo de peso sem dieta, ou alteracao do apetite
+4. Insonia ou hipersonia quase todos os dias
+5. Agitacao ou retardo psicomotor observavel por outros
+6. Fadiga ou perda de energia quase todos os dias
+7. Sentimentos de inutilidade ou culpa excessiva/inadequada
+8. Capacidade diminuida de pensar, concentrar-se ou tomar decisoes
+9. Pensamentos recorrentes de morte, ideacao suicida ou tentativa de suicidio
+
+Especificadores: leve, moderado, grave, com caracteristicas psicoticas, em remissao parcial/total.
+Prevalencia: Aproximadamente 7% da populacao adulta.
+Tratamento recomendado: TCC, terapia interpessoal, farmacoterapia (ISRS como primeira linha), ou combinacao.
+
+=== TRANSTORNO DE ANSIEDADE GENERALIZADA - TAG (F41.1) ===
+
+Criterios diagnosticos:
+A. Ansiedade e preocupacao excessivas sobre diversos eventos ou atividades, ocorrendo na maioria dos dias, por pelo menos 6 meses.
+B. Dificuldade em controlar a preocupacao.
+C. Pelo menos 3 dos seguintes sintomas (em adultos):
+   1. Inquietacao ou sensacao de estar com os nervos a flor da pele
+   2. Fatigabilidade
+   3. Dificuldade de concentracao ou sensacao de branco na mente
+   4. Irritabilidade
+   5. Tensao muscular
+   6. Perturbacao do sono
+
+Prevalencia: 2,9% da populacao adulta.
+Comorbidades frequentes: depressao maior, outros transtornos de ansiedade, abuso de substancias.
+Tratamento recomendado: TCC (especialmente reestruturacao cognitiva e relaxamento), farmacoterapia (ISRS, IRSN).
+
+=== TRANSTORNO DO PANICO (F41.0) ===
+
+Caracterizado por ataques de panico recorrentes e inesperados. Um ataque de panico e um surto abrupto de medo intenso que atinge um pico em minutos, com 4 ou mais dos seguintes sintomas:
+
+1. Palpitacoes, coracao acelerado
+2. Sudorese
+3. Tremores ou abalos
+4. Sensacoes de falta de ar ou sufocamento
+5. Sensacao de asfixia
+6. Dor ou desconforto toracico
+7. Nausea ou desconforto abdominal
+8. Tontura, instabilidade ou desmaio
+9. Calafrios ou ondas de calor
+10. Parestesias (formigamentos)
+11. Desrealizacao ou despersonalizacao
+12. Medo de perder o controle ou enlouquecer
+13. Medo de morrer
+
+Prevalencia: 2-3% em adultos.
+Tratamento recomendado: TCC com exposicao interoceptiva, tecnicas de respiracao, farmacoterapia se necessario.
+
+=== TRANSTORNO DE ANSIEDADE SOCIAL - FOBIA SOCIAL (F40.10) ===
+
+Criterios diagnosticos:
+A. Medo ou ansiedade acentuados em situacoes sociais onde o individuo e exposto a possivel avaliacao por outras pessoas.
+B. O individuo teme agir de forma humilhante ou embaracosa.
+C. As situacoes sociais quase sempre provocam medo ou ansiedade.
+D. As situacoes sociais sao evitadas ou suportadas com intenso medo ou ansiedade.
+E. Duracao minima de 6 meses.
+
+Prevalencia: 7% da populacao.
+Tratamento recomendado: TCC com exposicao gradual, treinamento de habilidades sociais, farmacoterapia (ISRS).
+
+=== TRANSTORNO DE ESTRESSE POS-TRAUMATICO - TEPT (F43.10) ===
+
+Ocorre apos exposicao a evento traumatico (morte real ou ameaca, lesao grave, violencia sexual). Sintomas agrupados em 4 clusters:
+
+1. Intrusao: memorias intrusivas, pesadelos, flashbacks, sofrimento psicologico intenso
+2. Evitacao: evitar memorias, pensamentos, sentimentos, lembrancas externas associadas ao trauma
+3. Alteracoes cognitivas e de humor: amnesia dissociativa, crencas negativas persistentes, culpa distorcida, emocoes negativas persistentes, interesse diminuido, distanciamento, incapacidade de sentir emocoes positivas
+4. Alteracoes de excitacao e reatividade: irritabilidade, comportamento imprudente, hipervigilancia, resposta de sobressalto exagerada, problemas de concentracao, perturbacao do sono
+
+Duracao: mais de 1 mes.
+Prevalencia: 3,5% da populacao adulta (ate 50% em sobreviventes de trauma grave).
+Tratamento recomendado: TCC focada no trauma, EMDR, exposicao prolongada, farmacoterapia (ISRS).
+
+=== TRANSTORNO OBSESSIVO-COMPULSIVO - TOC (F42) ===
+
+Presenca de obsessoes e/ou compulsoes:
+
+Obsessoes: pensamentos, impulsos ou imagens recorrentes e persistentes, experimentados como intrusivos e indesejados.
+
+Compulsoes: comportamentos repetitivos (lavar maos, verificar, ordenar) ou atos mentais (contar, rezar, repetir palavras) que o individuo se sente compelido a executar em resposta a uma obsessao.
+
+Subtipos comuns: contaminacao/limpeza, simetria/ordenacao, pensamentos proibidos, verificacao/dano.
+Prevalencia: 1,2% da populacao adulta.
+Tratamento recomendado: TCC com exposicao e prevencao de resposta (EPR), farmacoterapia (ISRS em doses altas).
+
+=== TRANSTORNO DE DEFICIT DE ATENCAO/HIPERATIVIDADE - TDAH (F90) ===
+
+Padrao persistente de desatencao e/ou hiperatividade-impulsividade que interfere no funcionamento.
+
+Sintomas de desatencao (6 ou mais, por pelo menos 6 meses):
+- Nao presta atencao a detalhes, comete erros por descuido
+- Dificuldade em manter atencao em tarefas
+- Parece nao ouvir quando abordado diretamente
+- Nao segue instrucoes, nao termina tarefas
+- Dificuldade em organizar tarefas e atividades
+- Evita tarefas que exigem esforco mental prolongado
+- Perde objetos necessarios para tarefas
+- Facilmente distraido por estimulos externos
+- Esquecido em atividades diarias
+
+Sintomas de hiperatividade/impulsividade (6 ou mais):
+- Remexe maos ou pes, se contorce na cadeira
+- Levanta da cadeira quando deveria permanecer sentado
+- Corre ou escala em situacoes inapropriadas
+- Incapaz de brincar ou se envolver em atividades de lazer calmamente
+- Frequentemente age como se estivesse "a todo vapor"
+- Fala excessivamente
+- Responde antes de a pergunta ser concluida
+- Dificuldade em esperar sua vez
+- Interrompe ou se intromete
+
+Apresentacoes: predominantemente desatenta, predominantemente hiperativa-impulsiva, combinada.
+Prevalencia: 5% em criancas, 2,5% em adultos.
+Tratamento: TCC adaptada, farmacoterapia (estimulantes como metilfenidato), psicoeducacao, coaching.

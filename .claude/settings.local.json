@@ -25,7 +25,11 @@
       "Bash(.venv/Scripts/python:*)",
       "Bash(PYTHONIOENCODING=utf-8 .venv/Scripts/python << 'PYEOF':*)",
       "Bash(curl -s -X POST http://localhost:11434/api/chat -d '{\"\"\"\"model\"\"\"\":\"\"\"\"llama3.2:1b\"\"\"\",\"\"\"\"messages\"\"\"\":[{\"\"\"\"role\"\"\"\":\"\"\"\"user\"\"\"\",\"\"\"\"content\"\"\"\":\"\"\"\"say hi\"\"\"\"}],\"\"\"\"stream\"\"\"\":false}')",
-      "Bash(.venv/Scripts/streamlit run:*)"
+      "Bash(.venv/Scripts/streamlit run:*)",
+      "Bash(taskkill //F //IM streamlit.exe)",
+      "Bash(taskkill //F //IM \"python.exe\" //FI \"WINDOWTITLE eq streamlit*\")",
+      "Bash(taskkill //F //IM python.exe)",
+      "Bash(rm -rf chroma_data)"
     ]
   }
 }

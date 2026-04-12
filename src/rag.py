@@ -86,9 +86,10 @@ def _chunk_text(text, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP):
         if chunk:
             chunks.append(chunk)
 
-        start = end - overlap
-        if start >= len(text):
-            break
+        new_start = end - overlap
+        if new_start <= start:
+            new_start = start + chunk_size
+        start = new_start
 
     return chunks
 

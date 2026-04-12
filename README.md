@@ -4,9 +4,10 @@
 
 ## Challenge-Based Learning (CBL)
 
-- **Grande Ideia**: Gestao inteligente e produtividade tecnologica na psicologia clinica
-- **Pergunta Essencial**: Como a IA pode reduzir a carga administrativa de psicologas autonomas?
-- **Desafio**: Criar um assistente que centraliza gestao financeira e fornece repositorio tecnico via RAG
+- **Grande Ideia**: Gestao inteligente e produtividade tecnologica na psicologia clinica.
+- **Pergunta Essencial**: Como a Inteligencia Artificial pode reduzir a carga administrativa e de pesquisa de psicologas autonomas, permitindo que elas foquem integralmente no acolhimento clinico?
+- **Desafio**: Construir um Assistente Inteligente para Psicologas que centralize a gestao financeira (prevendo riscos de inadimplencia), automatize a geracao de mensagens de cobranca respeitosas e forneca um repositorio tecnico consultavel via RAG para suporte em sessoes e estudos.
+- **Justificativa Pessoal**: *(a ser preenchida pelo aluno)*
 
 ## Funcionalidades
 

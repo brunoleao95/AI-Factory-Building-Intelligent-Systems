@@ -1,0 +1,104 @@
+TECNICAS DE TERAPIA COGNITIVO-COMPORTAMENTAL (TCC)
+Resumo para consulta clinica
+
+=== O QUE E A TCC? ===
+
+A Terapia Cognitivo-Comportamental (TCC) e uma abordagem psicoterapeutica baseada em evidencias que se fundamenta no modelo cognitivo: a forma como interpretamos as situacoes (nossos pensamentos) influencia como nos sentimos (emocoes) e como agimos (comportamentos). Foi desenvolvida por Aaron T. Beck na decada de 1960.
+
+A TCC e estruturada, focada no presente, orientada para objetivos e de duracao limitada (geralmente 12 a 20 sessoes). E considerada padrao-ouro para tratamento de transtornos de ansiedade e depressao.
+
+=== REGISTRO DE PENSAMENTOS DISFUNCIONAIS (RPD) ===
+
+O RPD e uma das tecnicas centrais da TCC. O paciente registra:
+1. Situacao: O que aconteceu? Onde? Quando? Com quem?
+2. Pensamento automatico: O que passou pela sua mente naquele momento?
+3. Emocao: O que voce sentiu? (intensidade de 0 a 100%)
+4. Evidencias a favor: Que fatos sustentam esse pensamento?
+5. Evidencias contra: Que fatos contradizem esse pensamento?
+6. Pensamento alternativo: Existe outra forma de ver a situacao?
+7. Resultado: Como voce se sente agora? (intensidade de 0 a 100%)
+
+Objetivo: Ajudar o paciente a identificar distorcoes cognitivas e desenvolver pensamentos mais equilibrados.
+
+=== REESTRUTURACAO COGNITIVA ===
+
+Processo de identificar e modificar pensamentos disfuncionais. Passos:
+1. Identificar o pensamento automatico negativo
+2. Examinar as evidencias (a favor e contra)
+3. Identificar a distorcao cognitiva envolvida
+4. Formular um pensamento alternativo mais realista
+5. Avaliar o impacto emocional da mudanca
+
+=== DISTORCOES COGNITIVAS COMUNS ===
+
+1. Pensamento tudo-ou-nada (dicotomico): Ver situacoes em apenas duas categorias, sem meio-termo. Exemplo: "Se eu nao for perfeito, sou um fracasso."
+
+2. Catastrofizacao: Prever o pior desfecho possivel. Exemplo: "Se eu errar na apresentacao, vou ser demitido."
+
+3. Leitura mental: Acreditar que sabe o que os outros estao pensando. Exemplo: "Ela acha que sou incompetente."
+
+4. Filtro mental (abstracao seletiva): Focar exclusivamente nos aspectos negativos. Exemplo: Receber 9 elogios e 1 critica e focar apenas na critica.
+
+5. Desqualificacao do positivo: Rejeitar experiencias positivas como se nao contassem. Exemplo: "Fui bem na prova, mas foi sorte."
+
+6. Generalizacao excessiva: Tirar conclusoes amplas a partir de um evento isolado. Exemplo: "Fui rejeitado uma vez, ninguem nunca vai me querer."
+
+7. Rotulacao: Colocar um rotulo fixo em si mesmo ou nos outros. Exemplo: "Sou um perdedor" em vez de "Cometi um erro."
+
+8. Personalizacao: Atribuir a si mesmo a responsabilidade por eventos externos. Exemplo: "Meu filho tirou nota baixa porque sou uma mae ruim."
+
+=== TECNICA DE EXPOSICAO GRADUAL ===
+
+Utilizada principalmente para fobias e transtornos de ansiedade:
+1. Construir uma hierarquia de situacoes temidas (de menor a maior ansiedade)
+2. Comecar pela situacao de menor ansiedade
+3. Permanecer na situacao ate a ansiedade diminuir naturalmente (habituacao)
+4. Avancar para o proximo nivel da hierarquia
+5. Repetir ate conseguir enfrentar a situacao mais temida
+
+Importante: nunca forcar o paciente. O ritmo deve ser respeitado.
+
+=== ATIVACAO COMPORTAMENTAL ===
+
+Tecnica fundamental para depressao:
+1. Monitorar atividades diarias e humor associado
+2. Identificar atividades que trazem prazer ou senso de realizacao
+3. Agendar gradualmente essas atividades na rotina
+4. Comecar com metas pequenas e alcancaveis
+5. Aumentar progressivamente o nivel de atividade
+
+Principio: mudanca no comportamento leva a mudanca no humor, quebrando o ciclo da depressao.
+
+=== TECNICAS DE RELAXAMENTO ===
+
+Respiracao diafragmatica (4-7-8):
+- Inspire pelo nariz contando ate 4
+- Segure a respiracao contando ate 7
+- Expire pela boca contando ate 8
+- Repita 4 a 6 vezes
+
+Relaxamento muscular progressivo (Jacobson):
+- Tensionar cada grupo muscular por 5 segundos
+- Relaxar por 10 a 15 segundos
+- Percorrer todo o corpo (pes, pernas, abdomen, peito, bracos, ombros, rosto)
+
+=== PSICOEDUCACAO ===
+
+Componente essencial da TCC. Consiste em educar o paciente sobre:
+- O modelo cognitivo (relacao pensamento-emocao-comportamento)
+- O transtorno especifico (sintomas, causas, tratamento)
+- As tecnicas que serao utilizadas
+- O papel ativo do paciente no tratamento
+
+Beneficios: aumenta a adesao ao tratamento, reduz estigma e empodera o paciente.
+
+=== TAREFA DE CASA ===
+
+A TCC utiliza tarefas entre sessoes para generalizar aprendizados:
+- Preencher RPDs durante a semana
+- Praticar tecnicas de relaxamento diariamente
+- Realizar exposicoes graduais planejadas
+- Monitorar atividades e humor
+- Ler materiais psicoeducativos
+
+A tarefa de casa e fundamental para a eficacia da terapia.
