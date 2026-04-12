@@ -81,22 +81,35 @@ def text_to_sql(question, schema_description):
     Returns:
         String com a query SQL
     """
-    prompt = f"""Voce e um especialista em SQL. Converta a pergunta do usuario em uma query SQL valida.
+    prompt = f"""Converta a pergunta em SQL simples. Use APENAS as tabelas e colunas listadas abaixo.
 
-SCHEMA DO BANCO DE DADOS:
-{schema_description}
+TABELAS:
+- pacientes: id_paciente, nome_codigo, valor_sessao, modelo_cobranca
+- financeiro: id_registro, id_paciente, data_sessao, valor, status_pagamento, nf_emitida
+- JOIN: financeiro.id_paciente = pacientes.id_paciente
+
+EXEMPLOS:
+Pergunta: Qual o faturamento total pago e pendente?
+SQL: SELECT status_pagamento, SUM(valor) AS total FROM financeiro GROUP BY status_pagamento
+
+Pergunta: Quais pacientes estao inadimplentes?
+SQL: SELECT p.nome_codigo, COUNT(*) AS sessoes_pendentes, SUM(f.valor) AS valor_pendente FROM financeiro f JOIN pacientes p ON f.id_paciente = p.id_paciente WHERE f.status_pagamento = 'pendente' GROUP BY p.nome_codigo ORDER BY valor_pendente DESC
+
+Pergunta: Qual o faturamento do mes de outubro?
+SQL: SELECT SUM(valor) AS total FROM financeiro WHERE data_sessao >= '2024-10-01' AND data_sessao < '2024-11-01' AND status_pagamento = 'pago'
+
+Pergunta: Quantas sessoes cada paciente teve?
+SQL: SELECT p.nome_codigo, COUNT(*) AS total_sessoes FROM financeiro f JOIN pacientes p ON f.id_paciente = p.id_paciente GROUP BY p.nome_codigo ORDER BY total_sessoes DESC
+
+Pergunta: Quais pacientes nao tiveram nota fiscal emitida?
+SQL: SELECT p.nome_codigo, COUNT(*) AS sem_nf FROM financeiro f JOIN pacientes p ON f.id_paciente = p.id_paciente WHERE f.nf_emitida = false GROUP BY p.nome_codigo ORDER BY sem_nf DESC
 
 REGRAS:
-- Use apenas as tabelas e colunas descritas acima
-- Retorne APENAS a query SQL, sem explicacoes
-- Use aspas simples para strings
-- Formate valores monetarios com 2 casas decimais
-- Para datas, use formato 'YYYY-MM-DD'
-- Use aliases claros para colunas calculadas
+- Retorne APENAS o SQL, sem explicacao
+- Use queries simples (sem subqueries quando possivel)
 - Nunca use DELETE, UPDATE, INSERT, DROP ou ALTER
 
-PERGUNTA: {question}
-
+Pergunta: {question}
 SQL:"""
 
     messages = [{"role": "user", "content": prompt}]

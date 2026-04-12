@@ -29,7 +29,8 @@
       "Bash(taskkill //F //IM streamlit.exe)",
       "Bash(taskkill //F //IM \"python.exe\" //FI \"WINDOWTITLE eq streamlit*\")",
       "Bash(taskkill //F //IM python.exe)",
-      "Bash(rm -rf chroma_data)"
+      "Bash(rm -rf chroma_data)",
+      "Bash(grep -E \"\\\\.py$|^d\")"
     ]
   }
 }
