@@ -7,7 +7,7 @@
 - **Grande Ideia**: Gestao inteligente e produtividade tecnologica na psicologia clinica.
 - **Pergunta Essencial**: Como a Inteligencia Artificial pode reduzir a carga administrativa e de pesquisa de psicologas autonomas, permitindo que elas foquem integralmente no acolhimento clinico?
 - **Desafio**: Construir um Assistente Inteligente para Psicologas que centralize a gestao financeira (prevendo riscos de inadimplencia), automatize a geracao de mensagens de cobranca respeitosas e forneca um repositorio tecnico consultavel via RAG para suporte em sessoes e estudos.
-- **Justificativa Pessoal**: *(a ser preenchida pelo aluno)*
+- **Justificativa Pessoal**: Acompanho de perto o dia a dia de uma psicóloga e percebo quanto tempo ela gasta com controle financeiro, cobrança de pacientes e busca em materiais técnicos. Tempo que poderia ser dedicado ao atendimento clínico, estudo da psicologia ou até mesmo descanso. Esse projeto nasceu da vontade de resolver um problema real que vejo acontecer, unindo minha formação em IA com uma necessidade concreta de quem trabalha sozinha na área da saúde mental.
 
 ## Funcionalidades
 
