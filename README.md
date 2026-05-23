@@ -2,6 +2,10 @@
 
 > Projeto da disciplina **AI Factory - Building Intelligent Systems** (PUCPR, 2o ano)
 
+## Demonstracao
+
+- **Video demo (Etapa 2)**: https://www.youtube.com/watch?v=IyGmePDv7FU
+
 ## Challenge-Based Learning (CBL)
 
 - **Grande Ideia**: Gestao inteligente e produtividade tecnologica na psicologia clinica.
@@ -24,7 +28,8 @@
 
 ## Stack
 
-- **LLM**: Ollama (llama3.2:1b) - local, sem API key
+- **LLM principal**: Ollama (`llama3.2:1b`) - local, sem API key. Usado em chat, Text-to-SQL, RAG e juiz DeepEval.
+- **LLM dos agentes**: Ollama Cloud (`gpt-oss:20b-cloud`, free tier) - usado apenas pelo CrewAI porque function calling exige modelo 7B+.
 - **Interface**: Streamlit
 - **Banco estruturado**: DuckDB (OLAP in-process)
 - **Banco vetorial**: ChromaDB
@@ -32,15 +37,18 @@
 - **AutoML**: FLAML (XGBoost vencedor)
 - **Agentes**: CrewAI
 - **Observabilidade**: Langfuse Cloud
-- **Avaliacao**: DeepEval (juiz Ollama)
+- **Avaliacao**: DeepEval (juiz Ollama local)
 - **Linguagem**: Python 3.13
 
 ## Como rodar
 
 ### Pre-requisitos
+
 - Python 3.10+
 - Ollama instalado e rodando (`ollama serve`)
-- Modelo llama3.2 baixado (`ollama pull llama3.2`)
+- Modelos baixados:
+  - `ollama pull llama3.2:1b` (local, ~1.3 GB)
+  - `ollama signin` + `ollama pull gpt-oss:20b-cloud` (Ollama Cloud free tier, necessario para a Crew)
 
 ### Instalacao
 
@@ -56,10 +64,10 @@ pip install -r requirements.txt
 # Copiar variaveis de ambiente (preencha LANGFUSE_* se quiser observabilidade)
 cp .env.example .env
 
-# Gerar dados ficticios
+# Gerar dados ficticios (uma vez)
 python scripts/generate_data.py
 
-# Treinar modelo de risco com FLAML (etapa 2) - ~3 minutos, baixa dataset UCI
+# Treinar modelo de risco com FLAML (~3 min, baixa dataset UCI)
 python scripts/train_ml_model.py
 ```
 
@@ -73,6 +81,8 @@ ollama serve
 streamlit run app.py
 ```
 
+Acesse http://localhost:8501
+
 ### Avaliacao (etapa 2)
 
 ```bash
@@ -84,10 +94,13 @@ python scripts/eval_deepeval.py
 
 1. Crie uma conta gratuita em https://cloud.langfuse.com
 2. Crie um projeto e copie `Public Key` e `Secret Key`
-3. Preencha `LANGFUSE_PUBLIC_KEY` e `LANGFUSE_SECRET_KEY` no `.env`
+3. Preencha no `.env`:
+   - `LANGFUSE_PUBLIC_KEY=...`
+   - `LANGFUSE_SECRET_KEY=...`
+   - `LANGFUSE_HOST=https://cloud.langfuse.com` (ou `https://us.cloud.langfuse.com` se sua conta for region US)
 4. Use o app normalmente - traces aparecem no dashboard com latencia e tokens.
 
-Acesse: http://localhost:8501
+Se as chaves nao estiverem no `.env`, o decorator de observabilidade vira no-op e o app continua funcionando offline.
 
 ### Documentos para RAG (opcional)
 
@@ -96,24 +109,29 @@ Coloque arquivos `.txt` ou `.pdf` na pasta `docs/` para habilitar a busca em doc
 ## Estrutura do Projeto
 
 ```
-├── app.py                  # Interface Streamlit (ponto de entrada)
-├── config.py               # Configuracoes e system prompt
+├── app.py                          # Interface Streamlit (ponto de entrada)
+├── config.py                       # Configuracoes, constantes, system prompt
 ├── data/
-│   ├── pacientes.csv       # Dados ficticios de pacientes
-│   └── financeiro.csv      # Registros financeiros ficticios
-├── docs/                   # Documentos para RAG
+│   ├── pacientes.csv               # Dados ficticios de pacientes (etapa 1)
+│   ├── financeiro.csv              # Registros financeiros ficticios (etapa 1)
+│   └── golden_dataset.json         # 15 perguntas para avaliacao (etapa 2)
+├── docs/                           # Documentos para RAG (DSM-5, etica CFP, TCC)
 ├── src/
-│   ├── __init__.py
-│   ├── database.py         # DuckDB: carregar CSVs, queries SQL
-│   ├── rag.py              # ChromaDB: indexacao e busca semantica
-│   ├── llm.py              # Ollama: chat, Text-to-SQL, RAG
-│   ├── ml_model.py         # scikit-learn: risco de inadimplencia
-│   └── agents.py           # Roteamento e agentes especializados
+│   ├── database.py                 # DuckDB
+│   ├── rag.py                      # ChromaDB
+│   ├── llm.py                      # Ollama: chat, Text-to-SQL, RAG
+│   ├── ml_model.py                 # Carrega FLAML.pkl, predict_risk
+│   ├── agents.py                   # Roteador + agentes especializados
+│   ├── crew.py                     # CrewAI: 3 agentes + tools (etapa 2)
+│   └── observability.py            # Wrapper Langfuse (etapa 2)
 ├── scripts/
-│   └── generate_data.py    # Gerador de dados ficticios
-├── .env.example            # Template de variaveis de ambiente
+│   ├── generate_data.py            # Gera CSVs ficticios
+│   ├── train_ml_model.py           # Treina FLAML sobre UCI (etapa 2)
+│   └── eval_deepeval.py            # Roda golden dataset (etapa 2)
+├── .env.example                    # Template de variaveis de ambiente
 ├── requirements.txt
-└── CLAUDE.md
+├── CLAUDE.md                       # Referencia tecnica detalhada
+└── README.md
 ```
 
 ## Exemplos de uso
@@ -124,9 +142,3 @@ Coloque arquivos `.txt` ou `.pdf` na pasta `docs/` para habilitar a busca em doc
 - "Gerar mensagem de cobranca para PAC-PHI"
 - "O que diz o DSM-5 sobre transtorno de ansiedade?" (requer docs indexados)
 - "/equipe quem esta inadimplente e gere as mensagens de cobranca" (etapa 2 - CrewAI)
-
-## Documentacao
-
-- [`CLAUDE.md`](CLAUDE.md) - referencia tecnica completa para agentes de IA
-- [`entregas/etapa1.md`](entregas/etapa1.md) - retrospectiva do projeto 1
-- [`entregas/etapa2.md`](entregas/etapa2.md) - relatorio tecnico da etapa 2 (em construcao)
