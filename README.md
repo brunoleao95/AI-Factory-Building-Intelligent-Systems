@@ -11,22 +11,28 @@
 
 ## Funcionalidades
 
-| Funcionalidade | Tecnologia | Descricao |
-|----------------|------------|-----------|
-| Consultas financeiras | DuckDB + Text-to-SQL | Perguntas em linguagem natural sobre pagamentos, faturamento, inadimplencia |
-| Repositorio tecnico | ChromaDB + RAG | Busca semantica em documentos (DSM-5, TCC, Etica) |
-| Analise de risco | scikit-learn | Classificacao de risco de inadimplencia por paciente |
-| Cobranca WhatsApp | Ollama | Geracao de mensagens de cobranca respeitosas |
-| Chat com streaming | Streamlit + Ollama | Interface conversacional com respostas em tempo real |
+| Funcionalidade | Tecnologia | Etapa | Descricao |
+|----------------|------------|-------|-----------|
+| Consultas financeiras | DuckDB + Text-to-SQL | 1 | Perguntas em linguagem natural sobre pagamentos, faturamento, inadimplencia |
+| Repositorio tecnico | ChromaDB + RAG | 1 | Busca semantica em documentos (DSM-5, TCC, Etica) |
+| Cobranca WhatsApp | Ollama | 1 | Geracao de mensagens de cobranca respeitosas |
+| Chat com streaming | Streamlit + Ollama | 1 | Interface conversacional com respostas em tempo real |
+| Analise de risco | FLAML + UCI dataset | 2 | Classificacao de risco de inadimplencia (XGBoost via AutoML) |
+| Equipe de agentes | CrewAI | 2 | 3 agentes especializados para tarefas compostas (`/equipe`) |
+| Observabilidade | Langfuse | 2 | Traces, latencia, tokens (cloud) |
+| Avaliacao | DeepEval | 2 | 15 perguntas golden + faithfulness/answer_relevancy |
 
 ## Stack
 
-- **LLM**: Ollama (llama3.2) - local, sem API key
+- **LLM**: Ollama (llama3.2:1b) - local, sem API key
 - **Interface**: Streamlit
 - **Banco estruturado**: DuckDB (OLAP in-process)
 - **Banco vetorial**: ChromaDB
 - **Embeddings**: sentence-transformers (all-MiniLM-L6-v2)
-- **ML**: scikit-learn (RandomForestClassifier)
+- **AutoML**: FLAML (XGBoost vencedor)
+- **Agentes**: CrewAI
+- **Observabilidade**: Langfuse Cloud
+- **Avaliacao**: DeepEval (juiz Ollama)
 - **Linguagem**: Python 3.13
 
 ## Como rodar
@@ -47,11 +53,14 @@ python -m venv .venv
 # Instalar dependencias
 pip install -r requirements.txt
 
-# Copiar variaveis de ambiente
+# Copiar variaveis de ambiente (preencha LANGFUSE_* se quiser observabilidade)
 cp .env.example .env
 
 # Gerar dados ficticios
 python scripts/generate_data.py
+
+# Treinar modelo de risco com FLAML (etapa 2) - ~3 minutos, baixa dataset UCI
+python scripts/train_ml_model.py
 ```
 
 ### Executar
@@ -63,6 +72,20 @@ ollama serve
 # Rodar a aplicacao
 streamlit run app.py
 ```
+
+### Avaliacao (etapa 2)
+
+```bash
+# Executa o golden dataset (15 perguntas) e gera evals/results.md
+python scripts/eval_deepeval.py
+```
+
+### Observabilidade (etapa 2)
+
+1. Crie uma conta gratuita em https://cloud.langfuse.com
+2. Crie um projeto e copie `Public Key` e `Secret Key`
+3. Preencha `LANGFUSE_PUBLIC_KEY` e `LANGFUSE_SECRET_KEY` no `.env`
+4. Use o app normalmente - traces aparecem no dashboard com latencia e tokens.
 
 Acesse: http://localhost:8501
 
@@ -100,3 +123,10 @@ Coloque arquivos `.txt` ou `.pdf` na pasta `docs/` para habilitar a busca em doc
 - "Qual o risco de inadimplencia do PAC-DELTA?"
 - "Gerar mensagem de cobranca para PAC-PHI"
 - "O que diz o DSM-5 sobre transtorno de ansiedade?" (requer docs indexados)
+- "/equipe quem esta inadimplente e gere as mensagens de cobranca" (etapa 2 - CrewAI)
+
+## Documentacao
+
+- [`CLAUDE.md`](CLAUDE.md) - referencia tecnica completa para agentes de IA
+- [`entregas/etapa1.md`](entregas/etapa1.md) - retrospectiva do projeto 1
+- [`entregas/etapa2.md`](entregas/etapa2.md) - relatorio tecnico da etapa 2 (em construcao)

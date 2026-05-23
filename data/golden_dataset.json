@@ -1,0 +1,142 @@
+{
+  "description": "Golden dataset da etapa 2 - 15 perguntas representativas do dominio do assistente clinico, cobrindo financeiro, RAG, risco, cobranca e fora-de-escopo.",
+  "version": "1.0",
+  "language": "pt-BR",
+  "items": [
+    {
+      "id": "fin-01",
+      "category": "financeiro",
+      "difficulty": "facil",
+      "input": "Qual o total recebido ate agora?",
+      "expected_substrings": ["R$", "total"],
+      "expected_route": "financeiro",
+      "context_hint": "Soma de financeiro.valor onde status_pagamento = 'pago'."
+    },
+    {
+      "id": "fin-02",
+      "category": "financeiro",
+      "difficulty": "media",
+      "input": "Quais pacientes estao com pagamentos pendentes?",
+      "expected_substrings": ["PAC-"],
+      "expected_route": "financeiro",
+      "context_hint": "JOIN pacientes/financeiro filtrando por status_pagamento = 'pendente'."
+    },
+    {
+      "id": "fin-03",
+      "category": "financeiro",
+      "difficulty": "media",
+      "input": "Quanto recebi em outubro de 2024?",
+      "expected_substrings": ["R$"],
+      "expected_route": "financeiro",
+      "context_hint": "Filtrar data_sessao entre 2024-10-01 e 2024-11-01, status pago."
+    },
+    {
+      "id": "fin-04",
+      "category": "financeiro",
+      "difficulty": "dificil",
+      "input": "Quais pacientes ainda nao tiveram nota fiscal emitida em sessoes pagas?",
+      "expected_substrings": ["PAC-"],
+      "expected_route": "financeiro",
+      "context_hint": "WHERE nf_emitida = false AND status_pagamento = 'pago'."
+    },
+    {
+      "id": "rag-01",
+      "category": "rag",
+      "difficulty": "facil",
+      "input": "Quais sao as principais tecnicas de TCC para tratar ansiedade?",
+      "expected_substrings": ["reestrutura", "exposi"],
+      "expected_route": "rag",
+      "context_hint": "Documento tecnicas_tcc.txt; reestruturacao cognitiva, exposicao gradual, etc."
+    },
+    {
+      "id": "rag-02",
+      "category": "rag",
+      "difficulty": "media",
+      "input": "Por quanto tempo um psicologo deve guardar prontuarios segundo o CFP?",
+      "expected_substrings": ["20", "anos", "CFP"],
+      "expected_route": "rag",
+      "context_hint": "Documento codigo_etica_cfp.txt; sao 20 anos minimos."
+    },
+    {
+      "id": "rag-03",
+      "category": "rag",
+      "difficulty": "media",
+      "input": "Como o DSM-5 classifica os transtornos de humor?",
+      "expected_substrings": ["DSM", "humor"],
+      "expected_route": "rag",
+      "context_hint": "Documento dsm5_resumo.txt; transtornos depressivos e bipolares."
+    },
+    {
+      "id": "rag-04",
+      "category": "rag",
+      "difficulty": "dificil",
+      "input": "Em que situacoes o sigilo profissional pode ser quebrado?",
+      "expected_substrings": ["sigilo", "risco", "vida"],
+      "expected_route": "rag",
+      "context_hint": "Codigo de etica CFP - quebra justificavel para evitar dano grave."
+    },
+    {
+      "id": "risco-01",
+      "category": "risco",
+      "difficulty": "facil",
+      "input": "Qual paciente tem maior risco de inadimplencia?",
+      "expected_substrings": ["PAC-", "risco"],
+      "expected_route": "risco",
+      "context_hint": "Top 1 do predict_risk ordenado por probabilidade."
+    },
+    {
+      "id": "risco-02",
+      "category": "risco",
+      "difficulty": "media",
+      "input": "Quantos pacientes estao classificados como risco alto?",
+      "expected_substrings": ["risco"],
+      "expected_route": "risco",
+      "context_hint": "Contagem onde risco = 'ALTO' (probabilidade >= 0.5)."
+    },
+    {
+      "id": "risco-03",
+      "category": "risco",
+      "difficulty": "media",
+      "input": "Qual o risco do paciente PAC-ALPHA?",
+      "expected_substrings": ["PAC-ALPHA"],
+      "expected_route": "risco",
+      "context_hint": "predict_risk para id_paciente correspondente a PAC-ALPHA."
+    },
+    {
+      "id": "cob-01",
+      "category": "cobranca",
+      "difficulty": "media",
+      "input": "Gere uma mensagem de cobranca para PAC-ALPHA",
+      "expected_substrings": ["voce"],
+      "expected_route": "cobranca",
+      "context_hint": "generate_collection_message com tom empatico."
+    },
+    {
+      "id": "cob-02",
+      "category": "cobranca",
+      "difficulty": "dificil",
+      "input": "Liste os pacientes inadimplentes e crie mensagens de cobranca para cada um",
+      "expected_substrings": ["PAC-"],
+      "expected_route": "equipe",
+      "context_hint": "Pergunta composta - acionada via Crew (agente financeiro + risco + clinico)."
+    },
+    {
+      "id": "ooc-01",
+      "category": "fora_de_escopo",
+      "difficulty": "facil",
+      "input": "Qual a capital da Franca?",
+      "expected_substrings": [],
+      "expected_route": "geral",
+      "context_hint": "Pergunta fora do escopo - assistente deve recusar ou apontar limites."
+    },
+    {
+      "id": "ooc-02",
+      "category": "fora_de_escopo",
+      "difficulty": "media",
+      "input": "Me ensine a programar em Python",
+      "expected_substrings": [],
+      "expected_route": "geral",
+      "context_hint": "Pergunta fora do escopo - assistente deve esclarecer que nao e seu papel."
+    }
+  ]
+}

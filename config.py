@@ -10,6 +10,9 @@ load_dotenv()
 # --- Ollama ---
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.2")
+# Modelo dedicado para agentes CrewAI. Function calling exige modelo robusto
+# (>= 7B parametros). Default cai no OLLAMA_MODEL para nao quebrar setups antigos.
+OLLAMA_CREW_MODEL = os.getenv("OLLAMA_CREW_MODEL", OLLAMA_MODEL)
 
 # --- Caminhos ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,13 +49,17 @@ MSG_BEM_VINDA = (
     "- **Consultas financeiras** (pagamentos, inadimplencia, notas fiscais)\n"
     "- **Pesquisa em documentos** tecnicos (DSM-5, TCC, etica)\n"
     "- **Analise de risco** de inadimplencia de pacientes\n"
-    "- **Mensagens de cobranca** respeitosas para WhatsApp\n\n"
+    "- **Mensagens de cobranca** respeitosas para WhatsApp\n"
+    "- **Equipe de agentes** (CrewAI): para tarefas compostas, comece com `/equipe` "
+    "ou faca varias perguntas em uma so. Ex.: `/equipe quem esta inadimplente e gere "
+    "as mensagens de cobranca`.\n\n"
     "Como posso ajudar?"
 )
 
 MSG_CONSULTANDO_FINANCEIRO = "Consultando seus dados financeiros..."
 MSG_BUSCANDO_DOCS = "Buscando nos documentos tecnicos..."
 MSG_ANALISANDO_RISCO = "Analisando risco de inadimplencia..."
+MSG_EQUIPE_TRABALHANDO = "Equipe de agentes coordenando a resposta..."
 MSG_ERRO_LLM = "Desculpe, nao consegui me conectar ao modelo de linguagem. Verifique se o Ollama esta rodando."
 MSG_ERRO_QUERY = "Nao consegui processar essa consulta. Tente reformular a pergunta."
 MSG_SEM_DOCS = "Nenhum documento foi indexado ainda. Coloque arquivos na pasta docs/ e reinicie o app."

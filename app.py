@@ -4,12 +4,20 @@ Ponto de entrada: streamlit run app.py
 """
 
 import streamlit as st
-from config import MSG_BEM_VINDA, MSG_CONSULTANDO_FINANCEIRO, MSG_BUSCANDO_DOCS, MSG_ANALISANDO_RISCO, MSG_ERRO_LLM
+from config import (
+    MSG_BEM_VINDA,
+    MSG_CONSULTANDO_FINANCEIRO,
+    MSG_BUSCANDO_DOCS,
+    MSG_ANALISANDO_RISCO,
+    MSG_EQUIPE_TRABALHANDO,
+    MSG_ERRO_LLM,
+)
 from src.llm import check_ollama
 from src.database import load_tables, get_summary
 from src.rag import index_documents, get_stats
 from src.ml_model import train_model
 from src.agents import process_question, route_question
+from src.observability import status as observability_status, flush as observability_flush
 
 # --- Configuracao da Pagina ---
 st.set_page_config(
@@ -102,11 +110,28 @@ def render_sidebar(status):
         # Modelo ML
         if status["ml"]:
             ml = status["ml"]
-            st.markdown(f"✅ **Modelo ML**: Acuracia {ml['accuracy']:.0%}")
+            est = ml.get("best_estimator") or "RF"
+            acc = ml.get("accuracy")
+            if acc is not None:
+                st.markdown(f"✅ **Modelo ML** ({est}): Acuracia {acc:.0%}")
+            else:
+                st.markdown(f"✅ **Modelo ML** ({est})")
+            if ml.get("roc_auc") is not None:
+                st.markdown(f"   - ROC-AUC: {ml['roc_auc']:.2f}")
+            if ml.get("recall") is not None:
+                st.markdown(f"   - Recall: {ml['recall']:.0%}")
             st.markdown(f"   - Risco alto: {ml['risco_alto']} pacientes")
             st.markdown(f"   - Risco baixo: {ml['risco_baixo']} pacientes")
         else:
             st.markdown("⚠️ **Modelo ML**: Nao treinado")
+            st.info("Rode `python scripts/train_ml_model.py`")
+
+        # Observabilidade (Langfuse)
+        obs = observability_status()
+        if obs["enabled"]:
+            st.markdown(f"✅ **Langfuse**: ativo ({obs['host']})")
+        else:
+            st.markdown("📡 **Langfuse**: desativado (preencha .env)")
 
         st.markdown("---")
 
@@ -160,12 +185,17 @@ def render_chat(status):
             return
 
         # Detectar tipo de agente e mostrar feedback
-        agent_type = route_question(prompt)
+        from src.crew import should_use_crew
+        if should_use_crew(prompt):
+            agent_type = "equipe"
+        else:
+            agent_type = route_question(prompt)
         feedback_messages = {
             "financeiro": MSG_CONSULTANDO_FINANCEIRO,
             "rag": MSG_BUSCANDO_DOCS,
             "risco": MSG_ANALISANDO_RISCO,
             "cobranca": MSG_CONSULTANDO_FINANCEIRO,
+            "equipe": MSG_EQUIPE_TRABALHANDO,
             "geral": None,
         }
 
@@ -185,6 +215,9 @@ def render_chat(status):
 
         # Salvar resposta no historico
         st.session_state.messages.append({"role": "assistant", "content": response})
+
+        # Flush dos traces para o Langfuse (se ativo)
+        observability_flush()
 
 
 # --- Main ---

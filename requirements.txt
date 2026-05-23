@@ -10,3 +10,20 @@ scikit-learn
 pypdf
 pandas
 numpy
+
+# Etapa 2 - AutoML
+flaml[automl]
+ucimlrepo
+joblib
+
+# Etapa 2 - Agentes
+crewai
+crewai-tools
+langchain-community
+langchain-ollama
+
+# Etapa 2 - Observabilidade
+langfuse
+
+# Etapa 2 - Avaliacao
+deepeval

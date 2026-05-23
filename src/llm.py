@@ -1,11 +1,15 @@
 """
 Comunicacao com Ollama via API REST.
 Funcoes: chat com streaming, Text-to-SQL, RAG answer, mensagem de cobranca.
+
+Etapa 2: chamadas instrumentadas com Langfuse via `src.observability.observe`.
+Quando as chaves Langfuse nao estao configuradas o decorator vira no-op.
 """
 
 import json
 import requests
 from config import OLLAMA_BASE_URL, OLLAMA_MODEL, SYSTEM_PROMPT
+from src.observability import observe, update_trace_metadata
 
 
 def check_ollama():
@@ -17,6 +21,7 @@ def check_ollama():
         return False
 
 
+@observe(name="ollama_chat_stream", as_type="generation")
 def chat_stream(messages, system_prompt=None):
     """
     Envia mensagens para o Ollama e retorna um generator de tokens (streaming).
@@ -36,6 +41,7 @@ def chat_stream(messages, system_prompt=None):
         "messages": [{"role": "system", "content": system_prompt}] + messages,
         "stream": True,
     }
+    update_trace_metadata(model=OLLAMA_MODEL, n_messages=len(messages))
 
     try:
         response = requests.post(
@@ -62,6 +68,7 @@ def chat_stream(messages, system_prompt=None):
         yield f"Erro inesperado: {str(e)}"
 
 
+@observe(name="ollama_chat")
 def chat(messages, system_prompt=None):
     """
     Versao nao-streaming do chat. Retorna resposta completa como string.
@@ -70,6 +77,7 @@ def chat(messages, system_prompt=None):
     return "".join(tokens)
 
 
+@observe(name="text_to_sql")
 def text_to_sql(question, schema_description):
     """
     Converte pergunta em linguagem natural para SQL usando o LLM.
@@ -122,6 +130,7 @@ SQL:"""
     return sql
 
 
+@observe(name="rag_answer")
 def rag_answer(question, context_chunks):
     """
     Gera resposta usando contexto de documentos recuperados (RAG).
@@ -153,6 +162,7 @@ PERGUNTA: {question}"""
     return chat_stream(messages, system_prompt=SYSTEM_PROMPT)
 
 
+@observe(name="generate_collection_message")
 def generate_collection_message(patient_code, valor, sessoes_pendentes):
     """
     Gera mensagem de cobranca respeitosa para WhatsApp.

@@ -1,5 +1,8 @@
 """
 Pipeline RAG: indexacao de documentos e busca semantica com ChromaDB.
+
+Etapa 2: a funcao `search` esta instrumentada com Langfuse (span "retrieval")
+para que o trace mostre a etapa de recuperacao antes da chamada ao LLM.
 """
 
 import os
@@ -7,6 +10,7 @@ import hashlib
 import chromadb
 from chromadb.utils import embedding_functions
 from config import DOCS_DIR, CHROMA_DIR, EMBEDDING_MODEL, CHUNK_SIZE, CHUNK_OVERLAP, RAG_TOP_K
+from src.observability import observe
 
 
 def _get_embedding_function():
@@ -167,6 +171,7 @@ def index_documents(docs_path=None):
     }
 
 
+@observe(name="rag_retrieval")
 def search(query, top_k=None):
     """
     Busca semantica nos documentos indexados.

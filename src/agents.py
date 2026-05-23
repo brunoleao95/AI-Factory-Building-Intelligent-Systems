@@ -9,6 +9,7 @@ from src.database import execute_query, get_schema_description
 from src.rag import search, is_indexed
 from src.llm import chat_stream, text_to_sql, rag_answer, generate_collection_message, chat
 from src.ml_model import predict_risk, get_risk_summary
+from src.observability import observe
 
 
 # Palavras-chave para roteamento
@@ -250,9 +251,14 @@ def agent_cobranca(question):
         yield "\nPara gerar uma mensagem de cobranca, diga: *\"Gerar cobranca para PAC-NOME\"*"
 
 
+@observe(name="process_question")
 def process_question(question):
     """
     Processa pergunta do usuario: roteia e executa agente adequado.
+
+    Etapa 2: perguntas compostas ou prefixadas com '/equipe' sao despachadas
+    para a Crew CrewAI (multi-agente). Perguntas simples continuam no
+    roteador por keywords da etapa 1.
 
     Args:
         question: Pergunta do usuario
@@ -260,6 +266,13 @@ def process_question(question):
     Returns:
         Tuple (tipo_agente, generator_de_tokens)
     """
+    # Importacao lazy para nao penalizar a inicializacao do app caso a Crew
+    # nao seja usada (CrewAI puxa muitos modulos pesados).
+    from src.crew import should_use_crew, stream_crew
+
+    if should_use_crew(question):
+        return "equipe", stream_crew(question)
+
     agent_type = route_question(question)
 
     if agent_type == "financeiro":

@@ -6,3 +6,10 @@ __pycache__/
 chroma_data/
 .DS_Store
 *.pdf
+
+# Etapa 2
+data/uci_credit_default.csv
+models/
+evals/results.json
+evals/results.md
+.deepeval/
