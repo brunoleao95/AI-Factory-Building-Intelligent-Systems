@@ -11,12 +11,14 @@ from config import (
     MSG_ANALISANDO_RISCO,
     MSG_EQUIPE_TRABALHANDO,
     MSG_ERRO_LLM,
+    MSG_DISCLAIMER_IA,
 )
 from src.llm import check_ollama
 from src.database import load_tables, get_summary
 from src.rag import index_documents, get_stats
 from src.ml_model import train_model
 from src.agents import process_question, route_question
+from src.guardrails import scan_input, scan_output  # Etapa 3: seguranca
 from src.observability import status as observability_status, flush as observability_flush
 
 # --- Configuracao da Pagina ---
@@ -156,6 +158,7 @@ def render_sidebar(status):
 def render_chat(status):
     """Renderiza a interface de chat principal."""
     st.title("Assistente de Gestao Clinica")
+    st.info(MSG_DISCLAIMER_IA, icon="⚠️")  # Etapa 3: transparencia (Aula 8)
 
     # Inicializar historico
     if "messages" not in st.session_state:
@@ -184,12 +187,22 @@ def render_chat(status):
                 st.error(MSG_ERRO_LLM)
             return
 
+        # Guardrail de ENTRADA (Etapa 3): bloqueia ataques / anonimiza PII
+        guard_in = scan_input(prompt)
+        if not guard_in.allowed:
+            with st.chat_message("assistant", avatar="🧠"):
+                st.warning(guard_in.reason)
+            st.session_state.messages.append({"role": "assistant", "content": guard_in.reason})
+            observability_flush()
+            return
+        safe_prompt = guard_in.sanitized_text or prompt
+
         # Detectar tipo de agente e mostrar feedback
         from src.crew import should_use_crew
-        if should_use_crew(prompt):
+        if should_use_crew(safe_prompt):
             agent_type = "equipe"
         else:
-            agent_type = route_question(prompt)
+            agent_type = route_question(safe_prompt)
         feedback_messages = {
             "financeiro": MSG_CONSULTANDO_FINANCEIRO,
             "rag": MSG_BUSCANDO_DOCS,
@@ -207,11 +220,15 @@ def render_chat(status):
 
             # Processar e exibir resposta com streaming
             try:
-                _, response_generator = process_question(prompt)
+                _, response_generator = process_question(safe_prompt)
                 response = st.write_stream(response_generator)
             except Exception as e:
                 response = f"Ocorreu um erro ao processar sua pergunta: {str(e)}"
                 st.error(response)
+
+        # Guardrail de SAIDA (Etapa 3): anonimiza PII que tenha vazado na resposta
+        guard_out = scan_output(response)
+        response = guard_out.sanitized_text or response
 
         # Salvar resposta no historico
         st.session_state.messages.append({"role": "assistant", "content": response})

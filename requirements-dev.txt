@@ -1,0 +1,9 @@
+# =============================================================
+# Ferramentas de DESENVOLVIMENTO / AVALIACAO.
+# Nao sao necessarias em producao. Instala tudo do backend + extras de teste.
+#   pip install -r requirements-dev.txt
+# =============================================================
+-r requirements-backend.txt
+
+# Avaliacao (golden dataset / metricas RAG) - Etapa 2
+deepeval==4.0.0

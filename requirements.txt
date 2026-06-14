@@ -1,29 +1,8 @@
-streamlit
-gradio
-requests
-python-dotenv
-anthropic
-duckdb
-chromadb
-sentence-transformers
-scikit-learn
-pypdf
-pandas
-numpy
-
-# Etapa 2 - AutoML
-flaml[automl]
-ucimlrepo
-joblib
-
-# Etapa 2 - Agentes
-crewai
-crewai-tools
-langchain-community
-langchain-ollama
-
-# Etapa 2 - Observabilidade
-langfuse
-
-# Etapa 2 - Avaliacao
-deepeval
+# =============================================================
+# Frontend LEVE - publicado no Streamlit Cloud (app_cloud.py).
+# Apenas consome o backend via HTTP/SSE; nao carrega torch/chromadb/crewai.
+# O backend pesado roda localmente -> ver requirements-backend.txt
+# =============================================================
+streamlit==1.55.0
+requests==2.33.1
+python-dotenv==1.2.2

@@ -64,3 +64,35 @@ MSG_ERRO_LLM = "Desculpe, nao consegui me conectar ao modelo de linguagem. Verif
 MSG_ERRO_QUERY = "Nao consegui processar essa consulta. Tente reformular a pergunta."
 MSG_SEM_DOCS = "Nenhum documento foi indexado ainda. Coloque arquivos na pasta docs/ e reinicie o app."
 MSG_SEM_RESULTADO = "Nao encontrei informacoes sobre isso nos seus documentos. Tente reformular a pergunta."
+
+# --- Etapa 3: Guardrails (mensagens de bloqueio/seguranca) ---
+MSG_BLOQUEIO_INJECTION = (
+    "Nao posso atender a esse pedido. Ele parece tentar me fazer ignorar minhas "
+    "regras ou acessar dados de forma indevida. Posso ajudar com gestao financeira, "
+    "documentos tecnicos, risco de inadimplencia e mensagens de cobranca."
+)
+MSG_BLOQUEIO_TOXICIDADE = (
+    "Vamos manter um tom respeitoso, combinado? Reformule a mensagem e eu ajudo "
+    "com prazer nas questoes de gestao do seu consultorio."
+)
+MSG_FORA_ESCOPO = (
+    "Sou uma assistente de **gestao** do consultorio (financeiro, documentos, risco "
+    "e cobranca) e nao posso oferecer orientacao clinica ou medica individual. "
+    "Para questoes de saude, procure um profissional habilitado."
+)
+MSG_AUTOCUIDADO = (
+    "Sinto muito que voce esteja passando por isso. Eu sou apenas uma assistente de "
+    "gestao e nao consigo oferecer o apoio que esse momento pede. Por favor, procure "
+    "ajuda: ligue para o **CVV no 188** (24h, gratuito) ou acesse cvv.org.br. "
+    "Se houver risco imediato, ligue 192 (SAMU)."
+)
+MSG_PII_DETECTADA = (
+    "Detectei dados pessoais sensiveis na mensagem e os anonimizei antes de processar, "
+    "para proteger o sigilo. Lembre-se de usar os codigos dos pacientes (ex.: PAC-ALPHA)."
+)
+
+# --- Etapa 3: Transparencia / etica (aviso de IA) ---
+MSG_DISCLAIMER_IA = (
+    "Voce esta interagindo com uma **IA**. As respostas podem conter erros e nao "
+    "substituem o julgamento profissional. Nenhum nome real de paciente deve ser usado."
+)

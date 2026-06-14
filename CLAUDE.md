@@ -14,8 +14,8 @@ Projeto final: assistente inteligente para psicologas autonomas que centraliza g
 | Etapa | Status | Documento | O que adiciona |
 |-------|--------|-----------|----------------|
 | 1 | Entregue | [`entregas/etapa1.md`](entregas/etapa1.md) | Chat, RAG, Text-to-SQL, dados sinteticos, ML basico |
-| 2 | Em andamento | [`entregas/etapa2.md`](entregas/etapa2.md) | FLAML AutoML (UCI), CrewAI (3 agentes), Langfuse, DeepEval |
-| 3 | Pendente | _futuro_ | Producao: deploy, autenticacao, documentacao final |
+| 2 | Entregue | [`entregas/etapa2.md`](entregas/etapa2.md) | FLAML AutoML (UCI), CrewAI (3 agentes), Langfuse, DeepEval |
+| 3 | Em andamento | [`entregas/etapa3.md`](entregas/etapa3.md) | Guardrails (Presidio + HF + LLM-juiz), deploy hibrido (Streamlit Cloud + FastAPI/ngrok), analise critica |
 
 ## Stack
 
@@ -30,6 +30,8 @@ Projeto final: assistente inteligente para psicologas autonomas que centraliza g
 | **CrewAI** | Multi-agente para tarefas compostas (etapa 2) | src/crew.py |
 | **Langfuse** (cloud) | Observabilidade: traces, latencia, tokens (etapa 2) | cloud.langfuse.com |
 | **DeepEval** | Suite de avaliacao com golden dataset (etapa 2) | scripts/eval_deepeval.py |
+| **Presidio + modelos HF** | Guardrails: PII (pt-BR CPF/telefone) + injection/jailbreak/toxicidade/topicos (etapa 3) | src/guardrails.py |
+| **FastAPI + uvicorn** | Backend local exposto por ngrok; frontend leve no Streamlit Cloud (etapa 3) | api.py, app_cloud.py |
 | **Python 3.13** | Linguagem principal | .venv/ |
 
 ## Estrutura do Projeto
