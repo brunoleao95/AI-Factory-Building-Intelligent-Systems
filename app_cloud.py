@@ -32,7 +32,11 @@ def _secret(key, default=""):
 
 BACKEND_URL = _secret("BACKEND_URL", "http://localhost:8000").rstrip("/")
 API_KEY = _secret("API_KEY", "")
-HEADERS = {"X-API-Key": API_KEY} if API_KEY else {}
+# ngrok-skip-browser-warning: o free tier do ngrok injeta uma pagina de aviso
+# para requisicoes; o header pula isso e devolve o JSON/SSE direto.
+HEADERS = {"ngrok-skip-browser-warning": "true"}
+if API_KEY:
+    HEADERS["X-API-Key"] = API_KEY
 
 MSG_BEM_VINDA = (
     "Ola! Sou sua assistente de gestao clinica. Posso ajudar com:\n\n"

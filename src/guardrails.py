@@ -134,6 +134,35 @@ _PII_PLACEHOLDER = {
     "CPF": "[CPF]",
 }
 
+# PERSON e a entidade mais propensa a falso-positivo: o spaCy pt marca palavras
+# capitalizadas comuns (inicio de frase, termos do dominio) como nome. Mitigamos
+# com score minimo + denylist de termos que aparecem nas respostas do sistema.
+_PERSON_MIN_SCORE = 0.85
+_PERSON_DENYLIST = {
+    "taxa", "risco", "sessao", "sessoes", "probabilidade", "analise", "total",
+    "valor", "valores", "paciente", "pacientes", "pendente", "pendentes", "pago",
+    "pagos", "nota", "fiscal", "mensagem", "cobranca", "financeiro", "receita",
+    "inadimplencia", "inadimplente", "resposta", "observacao", "dados", "fonte",
+    "conforme", "voce", "ola", "obrigada", "atenciosamente", "baixo", "medio",
+    "alto", "real", "reais", "consulta", "resultado", "resumo",
+    "janeiro", "fevereiro", "marco", "abril", "maio", "junho", "julho", "agosto",
+    "setembro", "outubro", "novembro", "dezembro",
+}
+
+
+def _keep_pii(r, text):
+    """Filtra resultados do Presidio para reduzir falso-positivo de PERSON."""
+    if r.score < 0.5:
+        return False
+    if r.entity_type == "PERSON":
+        if r.score < _PERSON_MIN_SCORE:
+            return False
+        frag = _norm(text[r.start:r.end])
+        # descarta se todo o fragmento e composto por termos comuns do dominio
+        if all(w in _PERSON_DENYLIST for w in frag.split()):
+            return False
+    return True
+
 
 def _get_presidio():
     global _PRESIDIO
@@ -181,7 +210,7 @@ def _analyze_pii(text):
     analyzer, _ = presidio
     try:
         results = analyzer.analyze(text=text, language="pt", entities=_PII_ENTITIES)
-        return [r for r in results if r.score >= 0.5]
+        return [r for r in results if _keep_pii(r, text)]
     except Exception:
         return []
 
