@@ -9,7 +9,7 @@ avaliacao automatizada e uma camada de seguranca (guardrails) com anonimizacao d
 
 ## Demonstracao
 
-- **URL publica (Etapa 3)**: _preencher com a URL do Streamlit Cloud_
+- **URL publica (Etapa 3)**: https://ai-factory-building-intelligent-systems-mewz2xaperhawiznvrykwv.streamlit.app/
 - **Video demo (Etapa 3)**: _preencher_
 - **Video demo (Etapa 2)**: https://www.youtube.com/watch?v=IyGmePDv7FU
 

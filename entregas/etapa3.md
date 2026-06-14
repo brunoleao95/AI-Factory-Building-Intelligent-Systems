@@ -6,7 +6,7 @@
 
 ## Parte A — Revisitando o desafio
 
-**Link do site:** _preencher com a URL pública do Streamlit Cloud._
+**Link do site:** https://ai-factory-building-intelligent-systems-mewz2xaperhawiznvrykwv.streamlit.app/ (o chat responde quando o backend local + ngrok estao ativos na maquina da psicologa).
 
 Retomando o que foi definido na Etapa 1:
 
